@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karo Pitch – Pitch Your Startup to India's Top Investors</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #FF6B00;
+    --saffron-light: #FF8C38;
+    --saffron-dim: rgba(255,107,0,0.12);
+    --ink: #0D0D0D;
+    --ink2: #1A1A1A;
+    --ink3: #2A2A2A;
+    --fog: #F5F2EE;
+    --fog2: #EDE9E3;
+    --cream: #FAF8F5;
+    --muted: #888070;
+    --white: #FFFFFF;
+    --gold: #D4A82A;
+    --green: #1DB954;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 6vw;
+    background: rgba(250,248,245,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,107,0,0.1);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.08); }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.45rem; letter-spacing: -0.5px;
+    color: var(--ink);
+  }
+  .nav-logo span { color: var(--saffron); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 0.88rem; font-weight: 500; color: var(--ink3);
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+  .nav-cta {
+    background: var(--saffron); color: #fff;
+    border: none; padding: 10px 22px; border-radius: 8px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem;
+    cursor: pointer; letter-spacing: 0.03em;
+    transition: background .2s, transform .15s;
+  }
+  .nav-cta:hover { background: var(--saffron-light); transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--ink); border-radius: 2px; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 6vw 80px;
+    position: relative; overflow: hidden;
+    background: var(--ink);
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(circle at 15% 50%, rgba(255,107,0,0.18) 0%, transparent 50%),
+      radial-gradient(circle at 85% 20%, rgba(212,168,42,0.12) 0%, transparent 45%),
+      radial-gradient(circle at 60% 80%, rgba(255,107,0,0.08) 0%, transparent 40%);
+  }
+  .hero-grid-overlay {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 760px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,107,0,0.15); border: 1px solid rgba(255,107,0,0.3);
+    border-radius: 100px; padding: 6px 14px;
+    color: var(--saffron-light); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em;
+    margin-bottom: 28px;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; background: var(--saffron); border-radius: 50%;
+    animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800; line-height: 1.05;
+    color: #fff; letter-spacing: -2px;
+    animation: fadeUp .7s .1s ease both;
+  }
+  .hero h1 .accent { color: var(--saffron); }
+  .hero h1 .underline-accent {
+    position: relative; display: inline-block;
+  }
+  .hero h1 .underline-accent::after {
+    content: '';
+    position: absolute; left: 0; bottom: -4px; width: 100%; height: 3px;
+    background: var(--saffron);
+    border-radius: 2px;
+    animation: slideIn .6s .8s ease both;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  @keyframes slideIn { to { transform: scaleX(1); } }
+
+  .hero-sub {
+    font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.65);
+    margin: 24px 0 40px; max-width: 520px;
+    font-weight: 300;
+    animation: fadeUp .7s .25s ease both;
+  }
+  .hero-buttons {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp .7s .4s ease both;
+  }
+  .btn-primary {
+    background: var(--saffron); color: #fff;
+    padding: 15px 32px; border-radius: 10px; border: none;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; letter-spacing: 0.02em;
+    transition: all .2s; text-decoration: none; display: inline-block;
+    box-shadow: 0 8px 32px rgba(255,107,0,0.4);
+  }
+  .btn-primary:hover { background: var(--saffron-light); transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255,107,0,0.5); }
+  .btn-secondary {
+    background: transparent; color: #fff;
+    padding: 15px 32px; border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1rem;
+    cursor: pointer; letter-spacing: 0.02em;
+    transition: all .2s; text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06); }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-top: 64px; padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeUp .7s .55s ease both;
+    flex-wrap: wrap;
+  }
+  .stat-item {}
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;
+    color: #fff; letter-spacing: -1px;
+  }
+  .stat-num span { color: var(--saffron); }
+  .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top: 2px; font-weight: 400; }
+
+  .hero-visual {
+    position: absolute; right: 6vw; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 16px;
+    animation: fadeLeft .8s .3s ease both;
+    opacity: 0.9;
+  }
+  @keyframes fadeLeft { from { opacity:0; transform: translateY(-50%) translateX(40px); } to { opacity:.9; transform: translateY(-50%) translateX(0); } }
+  .hero-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 18px 22px; width: 220px;
+    backdrop-filter: blur(10px);
+  }
+  .hero-card .card-tag {
+    font-size: 0.68rem; letter-spacing: 0.08em; font-weight: 600;
+    color: var(--saffron); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .hero-card .card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: #fff; }
+  .hero-card .card-cat { font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+  .hero-card .card-raised {
+    margin-top: 12px; font-size: 0.72rem; color: rgba(255,255,255,0.5);
+  }
+  .hero-card .card-raised strong { color: var(--green); font-weight: 600; }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(29,185,84,0.15); border: 1px solid rgba(29,185,84,0.3);
+    border-radius: 100px; padding: 4px 10px;
+    font-size: 0.68rem; color: var(--green); font-weight: 600; letter-spacing: 0.05em;
+    margin-top: 10px;
+  }
+  .live-badge .live-dot { width: 5px; height: 5px; background: var(--green); border-radius: 50%;
+    animation: pulse 1.5s infinite; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── SECTIONS SHARED ─── */
+  section { padding: 100px 6vw; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    color: var(--saffron); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-label::before {
+    content: ''; width: 24px; height: 2px; background: var(--saffron); border-radius: 1px;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.9rem, 3.5vw, 3rem);
+    font-weight: 800; line-height: 1.1; letter-spacing: -1px;
+    color: var(--ink);
+  }
+  h2 .accent { color: var(--saffron); }
+
+  /* ─── ABOUT ─── */
+  .about { background: var(--fog); }
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-text p {
+    font-size: 1.05rem; line-height: 1.8; color: #555; margin-top: 20px;
+    font-weight: 300;
+  }
+  .about-text .highlight-box {
+    background: var(--saffron-dim); border-left: 3px solid var(--saffron);
+    border-radius: 0 10px 10px 0; padding: 18px 20px; margin-top: 28px;
+    font-size: 1rem; color: var(--ink); font-weight: 500; line-height: 1.6;
+  }
+  .about-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+  }
+  .about-pill {
+    background: var(--white); border-radius: 14px; padding: 24px 20px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .about-pill:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+  .about-pill .pill-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .about-pill .pill-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--ink);
+  }
+  .about-pill .pill-desc { font-size: 0.8rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+  /* ─── HOW IT WORKS ─── */
+  .how { background: var(--ink); }
+  .how h2 { color: #fff; }
+  .how-intro { font-size: 1rem; color: rgba(255,255,255,0.55); max-width: 480px; margin-top: 14px; line-height: 1.7; }
+  .steps {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    margin-top: 56px; position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute; top: 36px; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,107,0,0.4), rgba(255,107,0,0.4), transparent);
+    z-index: 0;
+  }
+  .step {
+    position: relative; z-index: 1;
+    padding: 0 24px; text-align: center;
+  }
+  .step-num {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--saffron-dim); border: 1.5px solid rgba(255,107,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--saffron);
+    transition: background .2s, border-color .2s;
+  }
+  .step:hover .step-num {
+    background: var(--saffron); color: #fff; border-color: var(--saffron);
+  }
+  .step-icon { font-size: 1.6rem; margin-bottom: 12px; }
+  .step-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #fff;
+    margin-bottom: 10px;
+  }
+  .step-desc { font-size: 0.83rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+
+  /* ─── WHO CAN APPLY ─── */
+  .who { background: var(--cream); }
+  .who-intro { font-size: 1rem; color: var(--muted); max-width: 480px; margin-top: 14px; line-height: 1.7; }
+  .categories {
+    display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px;
+  }
+  .cat-chip {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--white); border: 1.5px solid var(--fog2);
+    border-radius: 12px; padding: 14px 20px;
+    transition: all .2s; cursor: default;
+  }
+  .cat-chip:hover {
+    border-color: var(--saffron); background: var(--saffron-dim);
+    transform: translateY(-2px);
+  }
+  .cat-chip .cat-icon { font-size: 1.4rem; }
+  .cat-chip .cat-name {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--ink);
+  }
+  .cat-chip .cat-desc { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+  .who-cta-box {
+    margin-top: 48px;
+    background: linear-gradient(135deg, var(--saffron) 0%, #FF8C38 100%);
+    border-radius: 20px; padding: 40px 44px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    box-shadow: 0 16px 64px rgba(255,107,0,0.3);
+  }
+  .who-cta-box h3 {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; color: #fff;
+    letter-spacing: -0.5px;
+  }
+  .who-cta-box p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-top: 4px; }
+  .btn-white {
+    background: #fff; color: var(--saffron);
+    padding: 13px 28px; border-radius: 10px; border: none;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; white-space: nowrap;
+    transition: all .2s; text-decoration: none; display: inline-block;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+
+  /* ─── INVESTORS ─── */
+  .investors { background: var(--fog); overflow: hidden; }
+  .investors-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .investors-intro { font-size: 1rem; color: var(--muted); max-width: 420px; margin-top: 14px; line-height: 1.7; }
+  .investor-cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px;
+  }
+  .investor-card {
+    background: var(--white); border-radius: 16px; padding: 28px 24px;
+    text-align: center; border: 1.5px solid transparent;
+    transition: all .25s; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .investor-card:hover { border-color: var(--saffron); transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(255,107,0,0.12); }
+  .investor-avatar {
+    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; font-weight: 800; font-family: 'Syne', sans-serif; color: #fff;
+  }
+  .investor-card .inv-name {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--ink);
+  }
+  .investor-card .inv-title { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  .investor-card .inv-focus {
+    margin-top: 12px; display: inline-block;
+    background: var(--fog); border-radius: 100px; padding: 4px 12px;
+    font-size: 0.7rem; color: var(--saffron); font-weight: 600; letter-spacing: 0.04em;
+  }
+  .investors-note {
+    margin-top: 36px; text-align: center;
+    font-size: 0.88rem; color: var(--muted);
+  }
+  .investors-note strong { color: var(--ink); }
+
+  /* ─── STARTUPS ─── */
+  .startups { background: var(--cream); }
+  .startups-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .startup-cards {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px;
+  }
+  .startup-card {
+    background: var(--white); border-radius: 18px; overflow: hidden;
+    border: 1.5px solid var(--fog2);
+    transition: all .25s; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .startup-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+    border-color: var(--saffron); }
+  .startup-card-top {
+    padding: 24px 24px 16px; border-bottom: 1px solid var(--fog2);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .startup-logo {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .startup-card-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--ink);
+  }
+  .startup-card-cat {
+    font-size: 0.73rem; font-weight: 600; color: var(--saffron);
+    letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px;
+  }
+  .startup-card-body { padding: 16px 24px 20px; }
+  .startup-card-desc { font-size: 0.85rem; line-height: 1.65; color: #666; }
+  .startup-card-footer {
+    padding: 14px 24px; background: var(--fog);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .startup-card-location { font-size: 0.75rem; color: var(--muted); }
+  .startup-card-stage {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+    background: var(--saffron-dim); color: var(--saffron); border-radius: 100px;
+    padding: 3px 10px;
+  }
+
+  /* ─── KAROSTARTUP ─── */
+  .karostartup { background: var(--ink); }
+  .karostartup h2 { color: #fff; }
+  .ks-inner {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center; margin-top: 48px;
+  }
+  .ks-text p { font-size: 1rem; line-height: 1.8; color: rgba(255,255,255,0.6); font-weight: 300; margin-top: 16px; }
+  .ks-metrics {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .ks-metric {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 24px 20px;
+    transition: background .2s;
+  }
+  .ks-metric:hover { background: rgba(255,107,0,0.1); border-color: rgba(255,107,0,0.2); }
+  .ks-metric .m-num {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; color: var(--saffron);
+    letter-spacing: -1px;
+  }
+  .ks-metric .m-label { font-size: 0.8rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+
+  /* ─── FINAL CTA ─── */
+  .final-cta {
+    background: var(--fog);
+    text-align: center; padding: 120px 6vw;
+  }
+  .cta-badge {
+    display: inline-block;
+    background: var(--saffron-dim); border: 1px solid rgba(255,107,0,0.2);
+    border-radius: 100px; padding: 6px 16px;
+    font-size: 0.75rem; font-weight: 600; color: var(--saffron); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .final-cta h2 { font-size: clamp(2rem, 4vw, 3.6rem); max-width: 640px; margin: 0 auto; }
+  .final-cta p { font-size: 1rem; color: var(--muted); margin: 20px auto 0; max-width: 440px; line-height: 1.7; }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    padding: 15px 32px; border-radius: 10px;
+    border: 1.5px solid rgba(0,0,0,0.2);
+    font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1rem;
+    cursor: pointer;
+    transition: all .2s; text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--saffron); color: var(--saffron); background: var(--saffron-dim); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink2); color: rgba(255,255,255,0.4);
+    padding: 40px 6vw;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    font-size: 0.82rem;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: #fff; }
+  .footer-logo span { color: var(--saffron); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--saffron); }
+
+  /* ─── MARQUEE ─── */
+  .marquee-section { background: var(--saffron); overflow: hidden; padding: 16px 0; }
+  .marquee-track {
+    display: flex; gap: 48px;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-item {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+    color: rgba(255,255,255,0.85); letter-spacing: 0.06em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  }
+  .marquee-item .sep { color: rgba(255,255,255,0.4); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-visual { display: none; }
+    .about-inner { grid-template-columns: 1fr; gap: 40px; }
+    .steps { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .steps::before { display: none; }
+    .investor-cards { grid-template-columns: 1fr 1fr; }
+    .startup-cards { grid-template-columns: 1fr 1fr; }
+    .ks-inner { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 600px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 64px 5vw; }
+    .steps { grid-template-columns: 1fr; }
+    .investor-cards { grid-template-columns: 1fr 1fr; }
+    .startup-cards { grid-template-columns: 1fr; }
+    .who-cta-box { flex-direction: column; text-align: center; }
+    .investors-header, .startups-header { flex-direction: column; align-items: flex-start; }
+    .about-visual { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 16px; }
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+  .reveal-delay-4 { transition-delay: .4s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">Karo<span>Pitch</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#who">Apply</a></li>
+    <li><a href="#investors">Investors</a></li>
+    <li><a href="#startups">Startups</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('who').scrollIntoView({behavior:'smooth'})">Apply to Pitch →</button>
+  <div class="hamburger" onclick="alert('Mobile menu coming soon!')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span> Now Open — Season 1 Applications
+    </div>
+    <h1>Pitch Your Startup to<br><span class="accent">India's Top</span><br><span class="underline-accent">Investors.</span></h1>
+    <p class="hero-sub">Karo Pitch is a curated platform where early-stage founders from across Bharat — including Tier-2 and Tier-3 cities — connect directly with investors through live pitch events and a discovery platform.</p>
+    <div class="hero-buttons">
+      <a href="#who" class="btn-primary">Apply to Pitch →</a>
+      <a href="#startups" class="btn-secondary">Explore Startups</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-label">Startups Applied</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">80<span>+</span></div>
+        <div class="stat-label">Active Investors</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20<span>+</span></div>
+        <div class="stat-label">States Represented</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">₹12<span>Cr+</span></div>
+        <div class="stat-label">Funding Facilitated</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <div class="card-tag">🔴 Live Now</div>
+      <div class="card-title">GharSe Foods</div>
+      <div class="card-cat">D2C · Lucknow, UP</div>
+      <div class="card-raised">Seeking <strong>₹50L</strong> seed round</div>
+      <div class="live-badge"><span class="live-dot"></span> Pitching Live</div>
+    </div>
+    <div class="hero-card">
+      <div class="card-tag">✅ Funded</div>
+      <div class="card-title">KrushiTech</div>
+      <div class="card-cat">AgriTech · Nashik, MH</div>
+      <div class="card-raised">Raised <strong style="color:#D4A82A">₹1.2Cr</strong> via Karo Pitch</div>
+    </div>
+    <div class="hero-card">
+      <div class="card-tag">📋 Shortlisted</div>
+      <div class="card-title">UrbanKraft</div>
+      <div class="card-cat">Manufacturing · Surat, GJ</div>
+      <div class="card-raised">Pitching next <strong>Tuesday</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">D2C Brands <span class="sep">✦</span></span>
+    <span class="marquee-item">Consumer Startups <span class="sep">✦</span></span>
+    <span class="marquee-item">MSMEs <span class="sep">✦</span></span>
+    <span class="marquee-item">SaaS Startups <span class="sep">✦</span></span>
+    <span class="marquee-item">Manufacturing <span class="sep">✦</span></span>
+    <span class="marquee-item">Bharat-First Founders <span class="sep">✦</span></span>
+    <span class="marquee-item">AgriTech <span class="sep">✦</span></span>
+    <span class="marquee-item">EdTech <span class="sep">✦</span></span>
+    <span class="marquee-item">HealthTech <span class="sep">✦</span></span>
+    <span class="marquee-item">Tier-2 Cities <span class="sep">✦</span></span>
+    <span class="marquee-item">D2C Brands <span class="sep">✦</span></span>
+    <span class="marquee-item">Consumer Startups <span class="sep">✦</span></span>
+    <span class="marquee-item">MSMEs <span class="sep">✦</span></span>
+    <span class="marquee-item">SaaS Startups <span class="sep">✦</span></span>
+    <span class="marquee-item">Manufacturing <span class="sep">✦</span></span>
+    <span class="marquee-item">Bharat-First Founders <span class="sep">✦</span></span>
+    <span class="marquee-item">AgriTech <span class="sep">✦</span></span>
+    <span class="marquee-item">EdTech <span class="sep">✦</span></span>
+    <span class="marquee-item">HealthTech <span class="sep">✦</span></span>
+    <span class="marquee-item">Tier-2 Cities <span class="sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-text reveal">
+      <div class="section-label">About Karo Pitch</div>
+      <h2>Built for Founders<br>Across <span class="accent">Bharat</span></h2>
+      <p>Thousands of incredible founders are building real businesses from Patna to Surat, from Coimbatore to Bhopal — yet they struggle to access the investors, networks, and visibility they deserve.</p>
+      <p>Karo Pitch changes that. We connect India's most ambitious early-stage founders directly with investors through curated pitch events and a powerful discovery platform — no gatekeepers, no geography barriers.</p>
+      <div class="highlight-box">
+        "India's next unicorn isn't just being built in Bangalore or Mumbai. It's being built everywhere. Karo Pitch makes sure every founder gets a fair shot."
+      </div>
+    </div>
+    <div class="about-visual reveal reveal-delay-2">
+      <div class="about-pill">
+        <div class="pill-icon">🎯</div>
+        <div class="pill-title">Curated Pitches</div>
+        <div class="pill-desc">Every founder goes through a rigorous shortlisting before facing investors.</div>
+      </div>
+      <div class="about-pill">
+        <div class="pill-icon">🗺️</div>
+        <div class="pill-title">Pan-India Reach</div>
+        <div class="pill-desc">We actively source founders from Tier-2, Tier-3, and beyond.</div>
+      </div>
+      <div class="about-pill">
+        <div class="pill-icon">🤝</div>
+        <div class="pill-title">Real Investors</div>
+        <div class="pill-desc">Angel investors, family offices, and VC funds who write real cheques.</div>
+      </div>
+      <div class="about-pill">
+        <div class="pill-icon">📈</div>
+        <div class="pill-title">Mentorship First</div>
+        <div class="pill-desc">Founders get feedback and guidance even before the pitch day.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-label" style="color:var(--saffron)">How It Works</div>
+  <h2>From Application<br>to <span class="accent">Funding</span></h2>
+  <p class="how-intro">A clear, structured process designed to give every founder the best chance of finding the right investor.</p>
+  <div class="steps">
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">01</div>
+      <div class="step-icon">📋</div>
+      <div class="step-title">Apply with Your Pitch Deck</div>
+      <div class="step-desc">Fill out a short application form and share your pitch deck or a 2-minute video explaining your business.</div>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">02</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Get Shortlisted</div>
+      <div class="step-desc">Our team at KaroStartup reviews every application. Selected founders receive an invite for the live pitch event.</div>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">03</div>
+      <div class="step-icon">🎤</div>
+      <div class="step-title">Pitch Live to Investors</div>
+      <div class="step-desc">Present your startup in a structured 10-minute pitch session in front of a curated panel of investors.</div>
+    </div>
+    <div class="step reveal reveal-delay-4">
+      <div class="step-num">04</div>
+      <div class="step-icon">🚀</div>
+      <div class="step-title">Raise Funding & Scale</div>
+      <div class="step-desc">Receive term sheets, investor introductions, and ongoing support to raise capital and accelerate growth.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO CAN APPLY -->
+<section class="who" id="who">
+  <div class="section-label">Who Can Apply</div>
+  <h2>Built for Every<br>Kind of <span class="accent">Founder</span></h2>
+  <p class="who-intro">If you're building a real business solving real problems — Karo Pitch is for you. We welcome founders from all sectors.</p>
+  <div class="categories reveal">
+    <div class="cat-chip">
+      <div class="cat-icon">🛍️</div>
+      <div><div class="cat-name">D2C Brands</div><div class="cat-desc">Direct to consumer products</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">🏭</div>
+      <div><div class="cat-name">MSMEs</div><div class="cat-desc">Micro, small & medium enterprises</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">💡</div>
+      <div><div class="cat-name">Consumer Startups</div><div class="cat-desc">B2C products & services</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">⚙️</div>
+      <div><div class="cat-name">SaaS Startups</div><div class="cat-desc">Software & tech platforms</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">🔧</div>
+      <div><div class="cat-name">Manufacturing</div><div class="cat-desc">Product & hardware businesses</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">🌾</div>
+      <div><div class="cat-name">AgriTech & Rural</div><div class="cat-desc">Bharat-focused innovations</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">🏥</div>
+      <div><div class="cat-name">HealthTech</div><div class="cat-desc">Healthcare & wellness</div></div>
+    </div>
+    <div class="cat-chip">
+      <div class="cat-icon">🎓</div>
+      <div><div class="cat-name">EdTech</div><div class="cat-desc">Education & skilling</div></div>
+    </div>
+  </div>
+  <div class="who-cta-box reveal">
+    <div>
+      <h3>Ready to take your startup to the next level?</h3>
+      <p>Applications for Season 1 are open. Only 30 spots available.</p>
+    </div>
+    <a href="#" class="btn-white">Apply to Pitch →</a>
+  </div>
+</section>
+
+<!-- INVESTORS -->
+<section class="investors" id="investors">
+  <div class="investors-header">
+    <div>
+      <div class="section-label">Investors</div>
+      <h2>Meet Investors Looking for<br>the <span class="accent">Next Big Startup</span></h2>
+      <p class="investors-intro">Karo Pitch brings together a curated network of angels, micro-VCs, and family offices who are actively deploying capital into early-stage Indian startups.</p>
+    </div>
+  </div>
+  <div class="investor-cards reveal">
+    <div class="investor-card">
+      <div class="investor-avatar" style="background:linear-gradient(135deg,#FF6B00,#FF8C38)">R</div>
+      <div class="inv-name">Rajiv Mehta</div>
+      <div class="inv-title">Angel Investor · Ex-Flipkart</div>
+      <span class="inv-focus">D2C & Consumer</span>
+    </div>
+    <div class="investor-card">
+      <div class="investor-avatar" style="background:linear-gradient(135deg,#1DB954,#0FA044)">P</div>
+      <div class="inv-name">Priya Sharma</div>
+      <div class="inv-title">Partner · Bharat Ventures</div>
+      <span class="inv-focus">MSME & B2B SaaS</span>
+    </div>
+    <div class="investor-card">
+      <div class="investor-avatar" style="background:linear-gradient(135deg,#D4A82A,#B8911F)">A</div>
+      <div class="inv-name">Arjun Kapoor</div>
+      <div class="inv-title">Family Office · Pune</div>
+      <span class="inv-focus">Manufacturing</span>
+    </div>
+    <div class="investor-card">
+      <div class="investor-avatar" style="background:linear-gradient(135deg,#6C63FF,#4B44CC)">N</div>
+      <div class="inv-name">Nisha Patel</div>
+      <div class="inv-title">GP · Tier2 Capital</div>
+      <span class="inv-focus">Bharat-focused</span>
+    </div>
+  </div>
+  <p class="investors-note reveal">* Investor profiles are representative examples. <strong>80+ investors</strong> are expected to attend Season 1 pitch events.</p>
+</section>
+
+<!-- FEATURED STARTUPS -->
+<section class="startups" id="startups">
+  <div class="startups-header">
+    <div>
+      <div class="section-label">Featured Startups</div>
+      <h2>Founders Building<br><span class="accent">Bharat's Future</span></h2>
+    </div>
+    <a href="#" class="btn-outline">View All Startups →</a>
+  </div>
+  <div class="startup-cards reveal">
+    <div class="startup-card">
+      <div class="startup-card-top">
+        <div class="startup-logo" style="background:#FFF3E8">🌿</div>
+        <div>
+          <div class="startup-card-title">GharSe Foods</div>
+          <div class="startup-card-cat">D2C · Food & Beverage</div>
+        </div>
+      </div>
+      <div class="startup-card-body">
+        <div class="startup-card-desc">Bringing authentic regional Indian recipes to urban households through subscription meal kits. Partnered with 200+ home chefs from UP and Bihar.</div>
+      </div>
+      <div class="startup-card-footer">
+        <span class="startup-card-location">📍 Lucknow, Uttar Pradesh</span>
+        <span class="startup-card-stage">Pre-Seed</span>
+      </div>
+    </div>
+    <div class="startup-card">
+      <div class="startup-card-top">
+        <div class="startup-logo" style="background:#E8F5E9">🌾</div>
+        <div>
+          <div class="startup-card-title">KrushiTech</div>
+          <div class="startup-card-cat">AgriTech · B2B SaaS</div>
+        </div>
+      </div>
+      <div class="startup-card-body">
+        <div class="startup-card-desc">AI-powered crop advisory and input procurement platform helping 15,000+ smallholder farmers in Maharashtra increase yields by 30%.</div>
+      </div>
+      <div class="startup-card-footer">
+        <span class="startup-card-location">📍 Nashik, Maharashtra</span>
+        <span class="startup-card-stage">Seed</span>
+      </div>
+    </div>
+    <div class="startup-card">
+      <div class="startup-card-top">
+        <div class="startup-logo" style="background:#E3F2FD">🔧</div>
+        <div>
+          <div class="startup-card-title">UrbanKraft</div>
+          <div class="startup-card-cat">Manufacturing · D2C</div>
+        </div>
+      </div>
+      <div class="startup-card-body">
+        <div class="startup-card-desc">Premium handcrafted furniture brand sourcing from artisan clusters in Rajasthan and selling direct to urban consumers through their own D2C platform.</div>
+      </div>
+      <div class="startup-card-footer">
+        <span class="startup-card-location">📍 Surat, Gujarat</span>
+        <span class="startup-card-stage">Pre-Seed</span>
+      </div>
+    </div>
+    <div class="startup-card">
+      <div class="startup-card-top">
+        <div class="startup-logo" style="background:#F3E8FF">📚</div>
+        <div>
+          <div class="startup-card-title">SkillBridge</div>
+          <div class="startup-card-cat">EdTech · Skilling</div>
+        </div>
+      </div>
+      <div class="startup-card-body">
+        <div class="startup-card-desc">Vernacular-first vocational training app for blue and grey collar workers in Tier-3 cities, with guaranteed job placement outcomes.</div>
+      </div>
+      <div class="startup-card-footer">
+        <span class="startup-card-location">📍 Indore, Madhya Pradesh</span>
+        <span class="startup-card-stage">Seed</span>
+      </div>
+    </div>
+    <div class="startup-card">
+      <div class="startup-card-top">
+        <div class="startup-logo" style="background:#E8F5F5">🏥</div>
+        <div>
+          <div class="startup-card-title">SwasthyaCare</div>
+          <div class="startup-card-cat">HealthTech · B2C</div>
+        </div>
+      </div>
+      <div class="startup-card-body">
+        <div class="startup-card-desc">Telemedicine platform focused on rural and semi-urban India, offering specialist consultations at 1/10th of urban clinic costs via WhatsApp.</div>
+      </div>
+      <div class="startup-card-footer">
+        <span class="startup-card-location">📍 Patna, Bihar</span>
+        <span class="startup-card-stage">Pre-Seed</span>
+      </div>
+    </div>
+    <div class="startup-card">
+      <div class="startup-card-top">
+        <div class="startup-logo" style="background:#FFF8E1">🛒</div>
+        <div>
+          <div class="startup-card-title">MelaCart</div>
+          <div class="startup-card-cat">Consumer · Commerce</div>
+        </div>
+      </div>
+      <div class="startup-card-body">
+        <div class="startup-card-desc">Social commerce platform enabling small-town sellers and kiranas to build their own online storefronts in local languages with zero technical skills.</div>
+      </div>
+      <div class="startup-card-footer">
+        <span class="startup-card-location">📍 Jaipur, Rajasthan</span>
+        <span class="startup-card-stage">Seed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KAROSTARTUP -->
+<section class="karostartup" id="karostartup">
+  <div class="section-label" style="color:var(--saffron)">By KaroStartup</div>
+  <h2>India's Largest Startup<br>Storytelling <span class="accent">Platform</span></h2>
+  <div class="ks-inner">
+    <div class="ks-text reveal">
+      <p>KaroStartup has spent 5 years documenting and amplifying the stories of India's most inspiring founders — from garage startups to billion-dollar businesses.</p>
+      <p>We've built one of India's most engaged startup communities, with thousands of founder stories told, millions of entrepreneurs inspired, and a deep network across investors, founders, and startup ecosystems.</p>
+      <p>Karo Pitch is the natural evolution of this mission — moving from storytelling to actively enabling founders to access capital and grow.</p>
+    </div>
+    <div class="ks-metrics reveal reveal-delay-2">
+      <div class="ks-metric">
+        <div class="m-num">5000+</div>
+        <div class="m-label">Startup Stories Published</div>
+      </div>
+      <div class="ks-metric">
+        <div class="m-num">2M+</div>
+        <div class="m-label">Monthly Reach</div>
+      </div>
+      <div class="ks-metric">
+        <div class="m-num">500K+</div>
+        <div class="m-label">Founder Community</div>
+      </div>
+      <div class="ks-metric">
+        <div class="m-num">5 Yrs</div>
+        <div class="m-label">Empowering India's Builders</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="cta-badge">🚀 Season 1 — Now Open</div>
+  <h2 class="reveal">Ready to <span class="accent">Pitch Your Startup?</span></h2>
+  <p class="reveal">Join hundreds of founders who are already on their way to raising funding and scaling their vision across Bharat.</p>
+  <div class="cta-buttons reveal">
+    <a href="#" class="btn-primary">Apply Now →</a>
+    <a href="#" class="btn-outline">Partner With Us</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Karo<span>Pitch</span> <span style="font-weight:300;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.3)">by KaroStartup</span></div>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Apply</a>
+    <a href="#">Investors</a>
+    <a href="#">Instagram</a>
+    <a href="#">Contact</a>
+  </div>
+  <div>© 2025 KaroStartup. All rights reserved.</div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
