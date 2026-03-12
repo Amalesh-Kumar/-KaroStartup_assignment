@@ -1,0 +1,3 @@
+AI Tool Used: Claude AI
+
+I used Claude AI to assist in generating ideas for the layout, structure, and content of the homepage. The design was created with a clean and minimalist approach to reflect the professional and technology-focused nature of the Institute of Digital Risk. The layout emphasizes clarity and accessibility, with clearly separated sections such as the hero, services, community, and contact areas to make information easy to understand. The responsive design ensures the page works smoothly on both desktop and mobile devices while maintaining a modern tech-oriented aesthetic.
